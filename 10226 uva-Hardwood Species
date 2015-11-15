@@ -1,0 +1,36 @@
+#include <bits/stdc++.h>
+using namespace std;
+int main ()
+{
+    int tc, c;
+    scanf (" %d", &tc);
+    getchar();
+    getchar();
+    while (tc--) {
+        string str;
+        vector <string > v;
+        map <string, int> mymap;
+        c = 0;
+        while (1) {
+            getline (cin, str);
+            if (str[0] == NULL) break;
+            c++;
+            if (mymap.find(str) == mymap.end() ) {
+                mymap[str] = 1;
+                v.push_back (str);
+            }
+            else {
+                mymap[str]++;
+            }
+        }
+        sort (v.begin(), v.end());
+        for (int i = 0; i < v.size(); i++) {
+            float res; res = mymap[v[i]] / (float)c;
+            res *= 100;
+            cout << v[i];
+            printf (" %.4f\n", res);
+        }
+        if (tc != 0) cout << endl;
+    }
+    return 0;
+}
