@@ -1,0 +1,29 @@
+#include <bits/stdc++.h>
+using namespace std;
+long long reverse_num (long long n) {
+    long long c = 0, b = n;
+    while (b != 0) {
+        int digit = b %10;
+        c = c * 10 + digit;
+        b /= 10;
+    }
+    return c;
+}
+int main ()
+{
+    long long a, b;
+    int tc;
+    scanf (" %d", &tc);
+    while (tc--) {
+        scanf (" %lld", &a);
+        int count = 0;
+        while (count <= 1000) {
+            b = reverse_num (a);
+            a = a + b;
+            count++;
+            if (a == reverse_num(a)) break;
+        }
+        printf ("%d %lld\n", count, a);
+    }
+    return 0;
+}
