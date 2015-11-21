@@ -1,0 +1,24 @@
+#include <bits/stdc++.h>
+using namespace std;
+int main ()
+{
+    int n, k = 0;
+    while ((scanf (" %d", &n) == 1) && n) {
+        int ara[n]; int sum = 0;
+        for (int i = 0; i < n; i++) {
+            scanf (" %d", &ara[i]);
+            sum += ara[i];
+        }
+        int hi = sum / n;
+        int min_move = 0;
+        for (int i = 0; i < n; i++) {
+            if (ara[i] < hi) {
+                min_move += (hi - ara[i]);
+            }
+        }
+        printf ("Set #%d\n", ++k);
+        printf ("The minimum number of moves is %d.\n", min_move);
+        printf ("\n");
+    }
+    return 0;
+}
