@@ -1,0 +1,53 @@
+#include <bits/stdc++.h>
+using namespace std;
+int k;
+void andor (long long a, long long b) {
+    char sa[100], sb[100];
+    int i = 0;
+    while (b) {
+        sb[i++] = (b %2) + 48;
+        b = b /2;
+    } sb[i] = '\0';
+    int j = 0;
+    while (a) {
+        sa[j++] = (a %2) + 48;
+        a = a /2;
+    }
+    while (j < i) sa[j++] = 48;
+    sa[j] = '\0';
+    reverse (sa, sa +strlen(sa));
+    reverse (sb, sb +strlen(sb));
+    char oro[100], ando[100];
+    for (int i = 0; sa[i]; i++) {
+        if (sa[i] != sb[i] ) {
+            int j;
+            for (j = i; sa[j]; j++) {oro[j] = 49; ando[j] = 48;}
+            oro[j] = '\0'; ando[j] = '\0';
+            break;
+        }
+        else if (sa[i] == 49 && sb[i] == 49) {oro[i] = 49; ando[i] = 49;}
+        else if (sa[i] == 48 && sb[i] == 48) {oro[i] = 48; ando[i] = 48;}
+    }
+    //cout << sa << endl << sb << endl;
+    //cout << oro << endl << ando << endl;
+    long long x = oro[0] -48; long long y = ando[0] - 48;
+    for (int i = 1; sa[i]; i++) {
+        x = (x << 1) + (oro[i] - 48);
+        y = (y << 1) + (ando[i] - 48);
+    }
+    printf ("Case %d: %lld %lld\n", ++k, x, y);
+}
+int main ()
+{
+    int n, tc; k = 0;
+    scanf (" %d", &tc);
+    while (tc--) {
+        long long a, b, x, y;
+        scanf (" %lld %lld", &a, &b);
+//        x = a; y = a;
+//        for (int i = a+1; i <= b; i++) {x |= i; y &= i;}
+//        printf ("%d %d\n", x, y);
+        andor (a, b);
+    }
+    return 0;
+}
