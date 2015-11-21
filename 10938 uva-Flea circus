@@ -1,0 +1,59 @@
+//Using bfs..
+//least common ancestor..
+#include <bits/stdc++.h>
+using namespace std;
+vector <int > gra[10000];
+void bfs (int src, int des) {
+    queue <int > q;
+    int visited[10000] = {0};
+    int parent[10000]; int level[10000];
+    memset (parent, -1, sizeof (parent));
+    q.push(src); visited[src] = 1; level[src] = 0;
+    while (!q.empty()) {
+        int u = q.front(); q.pop();
+        for (int i = 0; i < gra[u].size(); i++) {
+            int v = gra[u][i];
+            if (!visited[v]) {
+                visited[v] = 1;
+                level[v] = level[u] + 1;
+                parent[v] = u;
+                q.push (v);
+            }
+        }
+    }
+    vector <int > v;
+    for (int i = des; parent[i] != -1; i = parent[i]) {
+        v.push_back (i);
+    }
+    v.push_back (src);
+    int len = v.size();
+    if (len %2 == 0) {
+        len = len/2;
+        if (v[len] < v[len-1])
+            printf ("The fleas jump forever between %d and %d.\n", v[len], v[len-1]);
+        else printf ("The fleas jump forever between %d and %d.\n", v[len-1], v[len]);
+    }
+    else {
+        len = len / 2;
+        printf ("The fleas meet at %d.\n", v[len]);
+    }
+}
+int main ()
+{
+    int n, q, x, y;
+    while ((scanf (" %d", &n) == 1) && n) {
+        for (int i = 0; i < n-1; i++) {
+            scanf (" %d %d", &x, &y);
+            gra[x].push_back (y);
+            gra[y].push_back (x);
+        }
+        scanf (" %d", &q);
+        for (int i = 0; i < q; i++) {
+            scanf (" %d %d", &x, &y);
+            int ara[5000];
+            bfs (x, y);
+        }
+        for (int i = 0; i < 10000; i++) gra[i].clear();
+    }
+    return 0;
+}
