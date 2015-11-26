@@ -1,0 +1,44 @@
+#include <bits/stdc++.h>
+using namespace std;
+int par[1000];
+int findpar (int n) {
+    if (par[n] == n) return n;
+    else findpar (par[n]);
+}
+void makepar (int x, int y) {
+    int u = findpar (x); int v = findpar (y);
+    if (u == v) return;
+    else par[u] = v;
+}
+int main ()
+{
+    int tc, temp = 0;
+    //freopen ("in.txt", "r", stdin);
+    scanf (" %d", &tc);
+    while (tc--) {
+        char n, x, y;
+        if (temp == 1) printf ("\n"); temp = 1;
+        scanf (" %c", &n);
+        getchar ();
+        for (int i = 'A'; i <= n; i++) {
+            par[i] = i;
+        }
+        string s;
+        while (1) {
+            if (getline(cin, s) == 0 || s.empty() == 1) break;
+            x = s[0];
+            y = s[1];
+            makepar (x, y);
+        }
+        map <int, int> mp; int ass = 0;
+        for (int i = 'A'; i <= n; i++) {
+            int u = findpar(i);
+            if (mp.find(u) == mp.end()) {
+                mp[u] = ++ass;
+            }
+        }
+        printf ("%d\n", ass);
+        memset (par, 0, sizeof (par));
+    }
+    return 0;
+}
