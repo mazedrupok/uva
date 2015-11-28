@@ -1,0 +1,50 @@
+#include <bits/stdc++.h>
+using namespace std;
+map <string, int> mp;
+int par[5050];
+int num[5050];
+int findpar (int n) {
+    if (par[n] == n) return n;
+    return findpar(par[n]);
+}
+void makepar (int x, int y) {
+    int u = findpar (x); int v = findpar (y);
+    if (u != v) {
+        par[u] = v;
+        num[v] += num[u];
+    }
+}
+void setinitial(int n)
+{
+    mp.clear();
+    for (int i = 0; i < n; ++i) {
+        par[i] = i;
+        num[i] = 1;
+    }
+}
+int findmax (int n) {
+    int mx = 0;
+    for (int i = 0; i < n; i++) {
+        if (mx < num[i]) mx = num[i];
+    }
+    return mx;
+}
+int main ()
+{
+    int tc, temp = 0, c, r, mx;
+    while (cin >> c >> r) {
+        if (!c && !r) break;
+        string s, p, q;
+        setinitial (c);
+        for (int i = 0; i < c; i++) {
+            cin >> s;
+            mp[s] = i;
+        }
+        for (int i = 0; i < r; i++) {
+            cin >> p >> q;
+            makepar (mp[p], mp[q]);
+        }
+        cout << findmax(c) << endl;
+    }
+    return 0;
+}
