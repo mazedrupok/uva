@@ -1,0 +1,33 @@
+#include <cstdio>
+#include <iostream>
+#include <string>
+using namespace std;
+
+bool empty=false;
+string s;
+
+void pop(string s) {
+    if (empty) return;
+    if (s.empty()){
+        empty = true;
+        return;
+    }
+    int i, j;
+    for(i=0; i<s.length() && !empty; i++) {
+        for(j=i ; s[i] == s[j] && j<s.length() ; j++)
+        ;
+        if (j-i >= 2) { pop(s.substr(0, i) + s.substr(j)); }
+        i = j-1;
+    }
+}
+
+int main() {
+    int tc;
+    scanf("%d\n", &tc);
+    while (tc--) {
+        empty=false;
+        cin >> s;
+        pop(s);
+        empty ? printf("1\n") : printf("0\n");
+    }
+}
