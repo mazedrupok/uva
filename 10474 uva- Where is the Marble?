@@ -1,0 +1,32 @@
+#include <iostream>
+#include <cstdio>
+#include <vector>
+#include <string>
+#include <cstring>
+#include <algorithm>
+using namespace std;
+int main ()
+{
+    int n, q, x, k = 0;
+    //freopen ("in.txt", "r", stdin);
+    while (cin >> n >> q) {
+        if (!n && !q) break;
+        int vc[10010];
+        for (int i = 0; i < n; i++) {
+            cin >> vc[i];
+        }
+        sort (vc, vc+n);
+        int ara[10010];
+        memset (ara, -1, sizeof (ara));
+        for (int i = 0; i < n; i++) {
+            if (ara[vc[i]] == -1) ara[vc[i]] = i+1;
+        }
+        printf ("CASE# %d:\n", ++k);
+        for (int i = 0; i < q; i++) {
+            cin >> x;
+            if (ara[x] == -1) printf ("%d not found\n", x);
+            else printf ("%d found at %d\n", x, ara[x]);
+        }
+    }
+    return 0;
+}
