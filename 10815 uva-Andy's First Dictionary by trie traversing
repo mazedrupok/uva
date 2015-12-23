@@ -1,0 +1,89 @@
+#include <bits/stdc++.h>
+using namespace std;
+struct node {
+	bool endmark;
+	node *next[26];
+	node() {
+		endmark = false;
+		for(int i = 0; i< 26; i++) next[i] = NULL;
+	}
+} *root;
+void insert(char *str, int len) {
+	node *curr = root;
+	for(int i = 0; i< len; i++) {
+		int id = str[i] - 'a';
+		if(curr->next[id] == NULL) {
+			curr->next[id] = new node();
+        }
+        curr = curr->next[id];
+	}
+	curr->endmark = true;
+}
+bool search(char *str, int len) {
+	node *curr = root;
+	for(int i = 0; i < len; i++) {
+		int id = str[i] - 'a';
+		if(curr->next[id] == NULL) return false;
+		curr = curr->next[id];
+	}
+	return curr->endmark;
+}
+char ss[5000]; int a = 0; //These are used for printAll function..
+
+void printAll (node *cur) {
+    if (cur->endmark ) {
+        ss[a] = '\0';
+        if (ss[0] != '\0') printf ("%s\n", ss);
+    }
+    for (int i = 0; i < 26; i++) {
+        if (cur->next[i] ) {
+            ss[a++] = i+'a';
+            printAll (cur->next[i]);
+            a--;
+            ss[a] = '\0'; //In backtracking I assign all NULL..
+        }
+    }
+}
+void del(node *cur) {
+    for(int i = 0; i< 26; i++)
+        if(cur->next[i])
+            del(cur->next[i]);
+    delete(cur);
+}
+int main(){
+	root = new node();
+	char str[5000];
+	//freopen ("in.txt", "r", stdin);
+	map <string, int> mp;
+	while (scanf(" %s", str) == 1) {
+		char s[5000]; int a = 0;
+		for (int i = 0; str[i]; i++) {
+            if (str[i] >= 'a' && str[i] <= 'z') s[a++] = str[i];
+            else if (str[i] >= 'A' && str[i] <= 'Z') s[a++] = str[i] + 32;
+            else {
+                if (s[0] == '\0' || s[0] == '\n') continue;
+                s[a] = '\0';
+                string tt; //to use mapping I need this string variable..
+                for (int j = 0; s[j]; j++) tt += s[j];
+                if (mp.find(tt) == mp.end()) { //if I use mapping one word one insert proceed..
+                    mp[tt] = 1;
+                    insert (s, strlen(s));
+                }
+                memset (s, '\0', sizeof (s));
+                a = 0;
+            }
+		}
+		if (s[0] == '\0' || s[0] == '\n') continue;
+		s[a] = '\0';
+		string tt;
+		for (int j = 0; s[j]; j++) tt += s[j];
+        if (mp.find(tt) == mp.end()) {
+            mp[tt] = 1;
+            insert (s, strlen(s));
+        }
+	}
+	printAll(root);
+	del(root);
+	return 0;
+}
+//UVA 10815 solution by using trie traversing..
