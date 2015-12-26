@@ -1,0 +1,38 @@
+#include <bits/stdc++.h>
+using namespace std;
+int main ()
+{
+    string s;
+    map <string, int> mp;
+    vector <string > vs, vc;
+    //freopen ("in.txt", "r", stdin);
+    while (cin >> s) {
+        if (s[0] == '#') break;
+        vs.push_back(s);
+        for (int j = 0; s[j]; j++)
+            if (s[j] >= 'a' && s[j] <= 'z') s[j] -= 32;
+        sort (s.begin(), s.end());
+        if (mp.find(s) == mp.end()) {
+            mp[s] = 1;
+        }
+        else {
+            mp[s] = 2;
+            vs.pop_back();
+        }
+    }
+
+    for (int i = 0; i < vs.size(); i++) {
+        s = vs[i];
+        for (int j = 0; s[j]; j++)
+            if (s[j] >= 'a' && s[j] <= 'z') s[j] -= 32;
+        sort (s.begin(), s.end());
+        if (mp[s] == 1) vc.push_back(vs[i]);
+    }
+    sort (vc.begin(), vc.end());
+    for (int i = 0; i < vc.size(); i++)
+        cout << vc[i] << endl;
+    vs.clear();
+    vc.clear();
+    mp.clear();
+    return 0;
+}
