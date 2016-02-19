@@ -7,6 +7,9 @@ int main ()
         for (int i = 1; ; i++) {
             mid = (l+r) /2;
             c1 = (sqrt(x*x-mid*mid) * sqrt(y*y-mid*mid)) / (sqrt(x*x-mid*mid) + sqrt(y*y-mid*mid));
+            //       AB*CD
+            // c = -----------
+            //       AB+CD
             if (fabs(c1-c) <= 0.000001) break;
             if (c1 > c) l = mid;
             else r = mid;
